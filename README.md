@@ -1,5 +1,5 @@
 # AVBlockRun
-![AVBlockRun logo](https://antoniovandre2.github.io/AVBlockRun/AVBlockRun - Logo - 200p.png)
+![AVBlockRun logo](https://antoniovandre2.github.io/AVBlockRun/AVBlockRun%20-%20Logo%20-%20200p.png)
 ____________________
 
 Proprietário: Antonio Vandré Pedrosa Furtunato Gomes ([bit.ly/antoniovandre_legadoontologico](https://bit.ly/antoniovandre_legadoontologico)).
