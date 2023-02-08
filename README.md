@@ -14,7 +14,7 @@ _____
 
 Execute com:
 
-java -jar AVBlockRun.jar [ARQUIVO DE ESTATISTICAS]
+java -jar AVBlockRunLauncher.jar [ARQUIVO DE ESTATISTICAS]
 
 O argumento "ARQUIVO DE ESTATISTICAS" é opcional, e serve para armazenar e recuperar a pontuação conquistada.
 
