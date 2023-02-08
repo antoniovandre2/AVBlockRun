@@ -18,7 +18,7 @@ java -jar AVBlockRun.jar [ARQUIVO DE ESTATISTICAS]
 
 O argumento "ARQUIVO DE ESTATISTICAS" é opcional, e serve para armazenar e recuperar a pontuação conquistada.
 
-Utilize as setas do teclado para mover, e ESC para sair.
+Utilize as setas do teclado para mover, barra de espaços para pausar, e ESC para sair.
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
