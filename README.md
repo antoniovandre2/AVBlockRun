@@ -8,8 +8,6 @@ README do "AVBlockRun".
 ____________________
 
 Um simples game de capturar blocos, desenvolvido em Java.
-
-Última atualização: 08-02-2023.
 _____
 
 Execute com:
