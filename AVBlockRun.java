@@ -9,7 +9,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 09-02-2023.
+ * Última atualização: 22-02-2023.
  */
 
 import java.awt.*;
@@ -153,14 +153,18 @@ public class AVBlockRun extends JComponent
             Versao = br.readLine();
             } catch (IOException e) {}
 
-        Pontuacao = LerEstatisticas (ArquivoEstatisticas);
+        if (! ArquivoEstatisticas.equals(""))
+            {
+            FlagArquivo = 1;
+            Pontuacao = LerEstatisticas (ArquivoEstatisticas);
+            }
 
         if (Pontuacao < 0)
             Pontuacao = 0;
 
         JFrame FrameJogo = new JFrame("AVBlockRun - " + Versao);
         FrameJogo.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        FrameJogo.setIconImage(new ImageIcon(getClass().getResource("AVBlockRun - Logo.png")).getImage());
+        FrameJogo.setIconImage(new ImageIcon(getClass().getResource("AVBlockRun - Logo - 200p.png")).getImage());
         FrameJogo.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY + TamanhoEspacoLabelStatus));
         AVBlockRun comp = new AVBlockRun();
         comp.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY));
@@ -296,7 +300,7 @@ public class AVBlockRun extends JComponent
                         {
                         Pontuacao++;
 
-                        if (FlagArquivo == 0)
+                        if (FlagArquivo == 1)
                             EscreverEstatisticas(ArquivoEstatisticas, Pontuacao);
 
                         System.out.println("Pontuação: " + String.valueOf(Pontuacao) + ".\n");
