@@ -3,13 +3,13 @@
  * 
  * Game ABBlockRun.
  * 
- * Dependências: AntonioVandre.
+ * Dependências: AntonioVandre >= 20231101.
  * 
  * Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 22-02-2023.
+ * Última atualização: 01-11-2023.
  */
 
 import java.awt.*;
@@ -48,6 +48,8 @@ public class AVBlockRun extends JComponent
     public int VelocidadeBlocoY = 0; // Velocidade inicial y do bloco.
 
     // Variáveis de funcionamento interno.
+
+    public long ValorInteiroLong;
     public int MargemX = (int) (TamanhoPlanoX / 50);
     public int MargemY = (int) (TamanhoPlanoY / 50);
     public int CorrecaoX = 10;
@@ -65,6 +67,8 @@ public class AVBlockRun extends JComponent
     public int yb = (int) ((TamanhoPlanoY + TamanhoBloco) / 2 - CorrecaoY);
     public int xt = xb;
     public int yt = yb;
+
+    public static String MensagemErroAntonioVandreLib = "Requer AntonioVandre >= 20231101.";
 
     private static class Line
         {
@@ -144,6 +148,22 @@ public class AVBlockRun extends JComponent
     public void jogo (String ArquivoEstatisticas)
         {
         String Versao = "Versão desconhecida.";
+
+        try
+            {
+            ValorInteiroLong = Long.parseLong(String.valueOf(AntonioVandre.Versao));
+            }
+        catch (NumberFormatException e)
+            {
+            System.out.println(MensagemErroAntonioVandreLib);
+            return;
+            }
+
+        if (AntonioVandre.Versao < 20231101)
+            {
+            System.out.println(MensagemErroAntonioVandreLib);
+            return;
+            }
 
         File file = new File(ArquivoAVBlockVersao);
 
@@ -388,7 +408,7 @@ public class AVBlockRun extends JComponent
             BufferedReader br = new BufferedReader(new FileReader(file));
             String PontuacaoStr = "";
             PontuacaoStr = br.readLine();
-            if (AntonioVandre.NumeroInteiroLong(PontuacaoStr))
+            if (AntonioVandre.NumeroNaturalPositivoLong(PontuacaoStr))
                 return Long.valueOf(PontuacaoStr);
             else
                 return -1;
