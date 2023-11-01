@@ -408,7 +408,7 @@ public class AVBlockRun extends JComponent
             BufferedReader br = new BufferedReader(new FileReader(file));
             String PontuacaoStr = "";
             PontuacaoStr = br.readLine();
-            if (AntonioVandre.NumeroNaturalPositivoLong(PontuacaoStr))
+            if (AntonioVandre.NumeroNaturalLong(PontuacaoStr))
                 return Long.valueOf(PontuacaoStr);
             else
                 return -1;
