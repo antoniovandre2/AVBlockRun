@@ -9,13 +9,14 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 01-11-2023.
+ * Última atualização: 10-11-2023.
  */
 
 import java.awt.*;
 import java.util.LinkedList;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -69,6 +70,51 @@ public class AVBlockRun extends JComponent
     public int yt = yb;
 
     public static String MensagemErroAntonioVandreLib = "Requer AntonioVandre >= 20231101.";
+
+    public class GradientLabel extends JLabel
+        {
+        private Color CorInicial;
+        private Color CorFinal;
+
+        public GradientLabel(String Texto)
+            {
+            super(Texto);
+
+            CorInicial = new Color(200, 0, 0);
+            CorFinal = Color.BLACK;
+            this.setForeground(Color.WHITE);
+            }
+
+        public GradientLabel(String Texto, Color CorInicial, Color CorFinal)
+            {
+            super(Texto);
+            this.CorInicial = CorInicial;
+            this.CorFinal = CorFinal;
+            this.setForeground(Color.WHITE);
+            }
+
+        public GradientLabel(String Texto, Color CorInicial, Color CorFinal, Color CorForeground)
+            {
+            super(Texto);
+            this.CorInicial = CorInicial;
+            this.CorFinal = CorFinal;
+            this.setForeground(CorForeground);
+            }
+
+        public void paint(Graphics g)
+            {
+            int width = getWidth();
+            int height = getHeight();
+
+            GradientPaint paint = new GradientPaint(0, 0, CorInicial, width, height, CorFinal, true);
+            Graphics2D g2d = (Graphics2D) g;
+            Paint oldPaint = g2d.getPaint();
+            g2d.setPaint(paint);
+            g2d.fillRect(0, 0, width, height);
+            g2d.setPaint(oldPaint);
+            super.paint(g);
+            }
+        }
 
     private static class Line
         {
@@ -189,10 +235,9 @@ public class AVBlockRun extends JComponent
         AVBlockRun comp = new AVBlockRun();
         comp.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY));
         FrameJogo.getContentPane().add(comp, BorderLayout.PAGE_START);
-        JLabel LabelStatus = new JLabel("Pontuação: " + String.valueOf(Pontuacao));
+        GradientLabel LabelStatus = new GradientLabel("Pontuação: " + String.valueOf(Pontuacao), new Color(200, 0, 0), Color.BLACK, Color.WHITE);
+        LabelStatus.setBorder(new EmptyBorder(5, 5, 5, 5));
         LabelStatus.setFont(new Font("DialogInput", Font.BOLD | Font.ITALIC, TamanhoFonteLabelStatus));
-        LabelStatus.setOpaque(true);
-        LabelStatus.setLocation(5, TamanhoPlanoY + 5);
         FrameJogo.add(LabelStatus);
 
         DesenharAlvo(comp);
