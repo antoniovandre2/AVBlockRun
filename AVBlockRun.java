@@ -9,7 +9,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 10-11-2023.
+ * Última atualização: 26-07-2024.
  */
 
 import java.awt.*;
@@ -35,7 +35,7 @@ public class AVBlockRun extends JComponent
     // Variáveis do game.
     public int TamanhoPlanoX = 600;
     public int TamanhoPlanoY = 600;
-    public int MinTamanhoPlanoX = 280;
+    public int MinTamanhoPlanoX = 300;
     public int MinTamanhoPlanoY = 300;
     public Color CorBloco = Color.BLACK;
     public Color CorAlvo = Color.RED;
@@ -137,45 +137,26 @@ public class AVBlockRun extends JComponent
     private final LinkedList<Line> lines = new LinkedList<Line>();
     private final LinkedList<Line> linesA = new LinkedList<Line>();
 
-    public void addLine(int x1, int x2, int x3, int x4)
+    public void addLine(int x1, int x2, int x3, int x4, Color color, int n)
         {
-        addLine(x1, x2, x3, x4, Color.black);
+        lines.add(new Line(x1,x2,x3,x4, color));
+        if (n == Integer.MAX_VALUE) repaint();
         }
 
-    public void addLine(int x1, int x2, int x3, int x4, Color color)
+    public void addLineA(int x1, int x2, int x3, int x4, Color color, int n)
         {
-        lines.add(new Line(x1,x2,x3,x4, color));        
-        repaint();
-        }
-
-    public void addLineA(int x1, int x2, int x3, int x4)
-        {
-        addLineA(x1, x2, x3, x4, Color.black);
-        }
-
-    public void addLineA(int x1, int x2, int x3, int x4, Color color)
-        {
-        linesA.add(new Line(x1,x2,x3,x4, color));        
-        repaint();
+        linesA.add(new Line(x1,x2,x3,x4, color));
+        if (n == Integer.MAX_VALUE) repaint();
         }
 
     public void clearLines()
-        {
-        lines.clear();
-        repaint();
-        }
+        {lines.clear();}
 
     public void clearLinesA()
-        {
-        linesA.clear();
-        repaint();
-        }
+        {linesA.clear();}
 
-    @Override
     protected void paintComponent(Graphics g)
         {
-        super.paintComponent(g);
-
         for (Line line : lines)
             {
             g.setColor(line.color);
@@ -359,8 +340,6 @@ public class AVBlockRun extends JComponent
                     if (yt  + TamanhoBloco >= TamanhoPlanoY - MargemY - CorrecaoY)
                         VelocidadeBlocoY = - Math.abs(VelocidadeBlocoY);
 
-                    DesenharBloco(comp);
-
                     if ((xt + TamanhoBloco >= xa) && (xt <= xa + TamanhoBloco) && (yt + TamanhoBloco >= ya) && (yt <= ya + TamanhoBloco))
                         {
                         Pontuacao++;
@@ -391,10 +370,16 @@ public class AVBlockRun extends JComponent
 
                     LabelStatus.setText("<html>Pontuação: " + String.valueOf(Pontuacao) + ".<br>" + DirecaoStr + "<br><br>Setas para mover.<br>Barra de espaços para pausar.<br>ESC para sair.</html>");
 
+                    DesenharBloco(comp);
+
                     if (xt < xb) xt++;
                     if (xt > xb) xt--;
                     if (yt < yb) yt++;
                     if (yt > yb) yt--;
+
+					double d = Math.sqrt((xt - xa) * (xt - xa) + (yt - ya) * (yt - ya)) / Math.max(TamanhoPlanoX, TamanhoPlanoY);
+
+					FrameJogo.getContentPane().setBackground(new Color((int) (256 * TonalidadeAproximacao - d * 256 * TonalidadeAproximacao / 4 - 1), (int) (256 * TonalidadeAproximacao / 4 - 1 + d * 128 * TonalidadeAproximacao), (int) (256 * TonalidadeAproximacao / 4 - 1 + d * 128 * TonalidadeAproximacao)));
 
                     try {
                         Thread.sleep((int) (100 / Math.max(Math.abs(VelocidadeBlocoX) + 1, Math.abs(VelocidadeBlocoY) + 1)));
@@ -404,8 +389,6 @@ public class AVBlockRun extends JComponent
                 }
                 else
                     LabelStatus.setText("<html>Pontuação: " + String.valueOf(Pontuacao) + ".<br><br>Jogo pausado.<br>Barra de espaços para continuar.</html>");
-
-            FrameJogo.getContentPane().setBackground(new Color(256 * TonalidadeAproximacao - (int) (Math.sqrt((xt - xa) * (xt - xa) + (yt - ya) * (yt - ya)) / Math.max(TamanhoPlanoX, TamanhoPlanoY) * (int) (256 * TonalidadeAproximacao / 4 - 1)), (int) (256 * TonalidadeAproximacao / 4 - 1) + (int) (Math.sqrt((xt - xa) * (xt - xa) + (yt - ya) * (yt - ya)) / Math.max(TamanhoPlanoX, TamanhoPlanoY) * 128 * TonalidadeAproximacao), (int) (256 * TonalidadeAproximacao / 4 - 1) + (int) (Math.sqrt((xt - xa) * (xt - xa) + (yt - ya) * (yt - ya)) / Math.max(TamanhoPlanoX, TamanhoPlanoY) * 128 * TonalidadeAproximacao)));
             }
 
             System.exit(0);
@@ -415,12 +398,12 @@ public class AVBlockRun extends JComponent
         {
         comp.clearLines();
 
-        comp.addLine(xt, yt, xt + TamanhoBloco, yt, CorBloco);
-        comp.addLine(xt + TamanhoBloco, yt, xt + TamanhoBloco, yt + TamanhoBloco, CorBloco);
-        comp.addLine(xt, yt, xt, yt + TamanhoBloco, CorBloco);
-        comp.addLine(xt, yt + TamanhoBloco, xt + TamanhoBloco, yt + TamanhoBloco, CorBloco);
+        comp.addLine(xt, yt, xt + TamanhoBloco, yt, CorBloco, 0);
+        comp.addLine(xt + TamanhoBloco, yt, xt + TamanhoBloco, yt + TamanhoBloco, CorBloco, 0);
+        comp.addLine(xt, yt, xt, yt + TamanhoBloco, CorBloco, 0);
+        comp.addLine(xt, yt + TamanhoBloco, xt + TamanhoBloco, yt + TamanhoBloco, CorBloco, 0);
 
-        comp.addLine(xt + (int) (TamanhoBloco / 2), yt + (int) (TamanhoBloco / 2), xa + (int) (TamanhoBloco / 2), ya + (int) (TamanhoBloco / 2), CorBloco);
+        comp.addLine(xt + (int) (TamanhoBloco / 2), yt + (int) (TamanhoBloco / 2), xa + (int) (TamanhoBloco / 2), ya + (int) (TamanhoBloco / 2), CorBloco, Integer.MAX_VALUE);
         }
 
     public void DesenharAlvo(AVBlockRun comp)
@@ -438,10 +421,10 @@ public class AVBlockRun extends JComponent
             if (ya >= TamanhoPlanoY - TamanhoBloco - MargemY - CorrecaoY) ya = TamanhoPlanoY - TamanhoBloco - MargemY - CorrecaoY - 1;
             } while ((xt + TamanhoBloco >= xa) && (xt <= xa + TamanhoBloco) && (yt + TamanhoBloco >= ya) && (yt <= ya + TamanhoBloco));
 
-        comp.addLineA(xa, ya, xa + TamanhoBloco, ya, CorAlvo);
-        comp.addLineA(xa + TamanhoBloco, ya, xa + TamanhoBloco, ya + TamanhoBloco, CorAlvo);
-        comp.addLineA(xa, ya, xa, ya + TamanhoBloco, CorAlvo);
-        comp.addLineA(xa, ya + TamanhoBloco, xa + TamanhoBloco, ya + TamanhoBloco, CorAlvo);
+        comp.addLineA(xa, ya, xa + TamanhoBloco, ya, CorAlvo, 0);
+        comp.addLineA(xa + TamanhoBloco, ya, xa + TamanhoBloco, ya + TamanhoBloco, CorAlvo, 0);
+        comp.addLineA(xa, ya, xa, ya + TamanhoBloco, CorAlvo, 0);
+        comp.addLineA(xa, ya + TamanhoBloco, xa + TamanhoBloco, ya + TamanhoBloco, CorAlvo, Integer.MAX_VALUE);
         }
 
     public long LerEstatisticas(String ArquivoEstatisticasArg)
