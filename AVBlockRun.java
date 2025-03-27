@@ -1,5 +1,5 @@
 /*
- * Proprietário: Antonio Vandré Pedrosa Furtunato Gomes (bit.ly/antoniovandre_legadoontologico).
+ * Proprietário: Antonio Vandré Pedrosa Furtunato Gomes.
  * 
  * Game ABBlockRun.
  * 
