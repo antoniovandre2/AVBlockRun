@@ -1,6 +1,6 @@
-// Projeto Mathematical Ramblings (mathematicalramblings.blogspot.com).
+// Projeto Mathematical Ramblings.
 
-// Biblioteca Java pertencente a Antonio Vandré Pedrosa Furtunato Gomes (bit.ly/antoniovandre_legadoontologico).
+// Biblioteca Java pertencente a Antonio Vandré Pedrosa Furtunato Gomes.
 
 // Dependências: JDK19.
 
