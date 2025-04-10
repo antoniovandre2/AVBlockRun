@@ -9,7 +9,7 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 26-07-2024.
+ * Última atualização: 10-04-2025.
  */
 
 import java.awt.*;
@@ -212,6 +212,7 @@ public class AVBlockRun extends JComponent
         JFrame FrameJogo = new JFrame("AVBlockRun - " + Versao);
         FrameJogo.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         FrameJogo.setIconImage(new ImageIcon(getClass().getResource("AVBlockRun - Logo - 200p.png")).getImage());
+		FrameJogo.setMinimumSize(new Dimension(MinTamanhoPlanoX, MinTamanhoPlanoY + TamanhoEspacoLabelStatus));
         FrameJogo.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY + TamanhoEspacoLabelStatus));
         AVBlockRun comp = new AVBlockRun();
         comp.setPreferredSize(new Dimension(TamanhoPlanoX, TamanhoPlanoY));
@@ -280,22 +281,6 @@ public class AVBlockRun extends JComponent
 
             int width = FrameJogo.getWidth();
             int height = FrameJogo.getHeight();
-
-            if (width < MinTamanhoPlanoX)
-                {
-                width = MinTamanhoPlanoX;
-                FrameJogo.setPreferredSize(new Dimension(width, height));
-                FrameJogo.setSize(width, height);
-                FlagRedimensionarOver = 1;
-                }
-
-            if (height < MinTamanhoPlanoY)
-                {
-                height = MinTamanhoPlanoY;
-                FrameJogo.setPreferredSize(new Dimension(width, height));
-                FrameJogo.setSize(width, height);
-                FlagRedimensionarOver = 1;
-                }
 
             if (FlagRedimensionarOver == 0)
                 if ((width != TamanhoPlanoX) || (height != TamanhoPlanoY + TamanhoEspacoLabelStatus))
