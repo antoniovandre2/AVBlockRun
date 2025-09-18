@@ -9,12 +9,13 @@
  * 
  * Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
  * 
- * Última atualização: 08-02-2023.
+ * Última atualização: 18-09-2025.
  */
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-
 import java.lang.ProcessBuilder;
 
 public class AVBlockRunLauncher
@@ -94,16 +95,16 @@ public class AVBlockRunLauncher
 
     private static void downloadUsingStream(String urlStr, String file) throws IOException
         {
-        URL url = new URL(urlStr);
-        BufferedInputStream bis = new BufferedInputStream(url.openStream());
-        FileOutputStream fis = new FileOutputStream(file);
-        byte[] buffer = new byte[1024];
-        int count=0;
-        while((count = bis.read(buffer,0,1024)) != -1)
-        {
-            fis.write(buffer, 0, count);
-        }
-        fis.close();
-        bis.close();
+		try
+			{
+			URL url = new URI(urlStr).toURL();
+			BufferedInputStream bis = new BufferedInputStream(url.openStream());
+			FileOutputStream fis = new FileOutputStream(file);
+			byte[] buffer = new byte[1024];
+			int count=0;
+			while((count = bis.read(buffer,0,1024)) != -1) fis.write(buffer, 0, count);
+			fis.close();
+			bis.close();
+			} catch (URISyntaxException e) {}
         }
 }
